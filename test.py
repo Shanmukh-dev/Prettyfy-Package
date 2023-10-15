@@ -44,6 +44,13 @@ colorize.intensify = False
 colorize(FgColor="WHITE", BgColor="RED", string="This must be normal").Colorize()
 
 
+
+
+boxed = Decor.boxstr("simple", "This works")
+
+
+colorize(FgColor = "BLUE", BgColor = "WHITE", string = boxed).Colorize()
+
+print(Decor.drawLine("double", 40))
+
 colorize().Reset()
-
-

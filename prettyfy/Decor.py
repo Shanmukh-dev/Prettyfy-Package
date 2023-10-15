@@ -17,9 +17,12 @@ BOX_CHARACTERS = {
 
 
 class Decor():
+
+    
+
     def drawLine(style, length):
         char = LINE_CHARACTERS[style]
-        print(char*length)
+        return char*length
 
     # def box(style, height, width):
     #     box_elements = BOX_CHARACTERS[style]
@@ -29,13 +32,16 @@ class Decor():
     #     print(box_elements[1][0] + box_elements[1][1] * (width-2) + box_elements[1][2])
         
     def boxstr(style, string):
+        boxed_str = ""
         lines = string.splitlines()
         box_elements = BOX_CHARACTERS[style]
         width = max([len(i) for i in lines])
-        print(box_elements[0][0] + box_elements[0][1] * (width + 2) + box_elements[0][2])
+        boxed_str += f"{box_elements[0][0] + box_elements[0][1] * (width + 2) + box_elements[0][2]}\n"
         for i, line in enumerate(lines):
-            print(box_elements[2] + ' ' + lines[i] + ' ' + " " * (width-len(lines[i])) + box_elements[2])
-        print(box_elements[1][0] + box_elements[1][1] * (width + 2) + box_elements[1][2])
+            boxed_str += f"{box_elements[2] + ' ' + lines[i] + ' ' + ' '  * (width-len(lines[i])) + box_elements[2]}\n"
+
+        boxed_str += f"{box_elements[1][0] + box_elements[1][1] * (width + 2) + box_elements[1][2]}"
+        return boxed_str
 
 
 # -----------------------------------Tests---------------------------------------------------- #

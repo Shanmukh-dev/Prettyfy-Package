@@ -25,6 +25,8 @@ class ANSI_Colorizer:
         self.ResetEscape = "\x1b[37;40m"
 
         
+    def colorInitiation(self):
+        print(self.ColorEscape)
 
     def Colorize(self):
         print(self.ColorEscape + self.string + self.DefaultColorEscape)
