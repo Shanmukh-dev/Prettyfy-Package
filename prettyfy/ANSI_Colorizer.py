@@ -1,15 +1,16 @@
 from .ColorSet import ColorSet
 
 import os
+import sys
 
 
 class ANSI_Colorizer:
     DefaultFg : str = "WHITE"
     DefaultBg : str = "BLACK"
 
-    def Print(text = None, sep: str | None = " ", end: str | None = "\n"):
+    def Print(text = None, sep: str = " ", end: str = "\n"):
         width = os.get_terminal_size().columns 
-
+        text = " " if text == "" else text
         if text != None:
             text = str(text)
             lines = text.splitlines()
@@ -21,6 +22,7 @@ class ANSI_Colorizer:
 
 
     def __init__(self, string = "", FgColor : str = None, BgColor : str = None) -> None:
+        if sys.platform == 'win32': os.system("")
 
         self.COLORS = ColorSet.REGULAR_COLOR_SET
 

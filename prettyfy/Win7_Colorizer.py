@@ -12,7 +12,8 @@ class Win7_Colorizer():
     intensify: bool = False
     def Print(text : str = None):
         width = os.get_terminal_size().columns 
-
+        text = " " if text == "" else text
+        
         if text != None:
             text = str(text)
             lines = text.splitlines()

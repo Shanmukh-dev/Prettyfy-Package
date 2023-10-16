@@ -6,4 +6,5 @@ from .ANSI_Colorizer import ANSI_Colorizer
 from .MenuDriver import MenuDriver
 
 
-TextColorizer = Win7_Colorizer if "Windows" in platform.platform() and int(platform.release()) < 10 else ANSI_Colorizer
+TextColorizer = Win7_Colorizer
+# TextColorizer = Win7_Colorizer if "Windows" in platform.platform() and int(platform.release()) < 10 else ANSI_Colorizer
