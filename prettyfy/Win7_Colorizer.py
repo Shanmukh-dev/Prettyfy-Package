@@ -10,7 +10,7 @@ class Win7_Colorizer():
     DefaultFg: str = "WHITE"
     DefaultBg: str = "BLACK"
     intensify: bool = False
-    def Print(text : str = None):
+    def Print(text : str = None, sep: str = " ", end: str = "\n"):
         width = os.get_terminal_size().columns 
         text = " " if text == "" else text
         
@@ -20,7 +20,7 @@ class Win7_Colorizer():
             length = [(len(line), line) for line in lines]
             for line in length:
                 
-                print(line[1] + " " * (width - line[0]))
+                print(line[1] + " " * (width - line[0]), sep=sep, end=end)
 
     def __init__(self, string="", FgColor: str = None, BgColor: str = None) -> None:
 

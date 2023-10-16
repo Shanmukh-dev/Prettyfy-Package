@@ -41,7 +41,7 @@ class ANSI_Colorizer:
         self.DefaultColorEscape = f"\x1b[{self.default_fg};{self.default_bg}m"
         self.ResetEscape = "\x1b[37;40m"
 
-    def CPrint(self, text: str = None, JustTextBG : bool | None = False):
+    def CPrint(self, text: str = None, JustTextBG : bool = False):
         width = os.get_terminal_size().columns 
 
         if text != None:
