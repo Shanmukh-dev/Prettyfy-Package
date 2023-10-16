@@ -1,6 +1,8 @@
 import ctypes as ct
 from .ColorSet import ColorSet
 
+import os
+
 
 class Win7_Colorizer():
     # ct.windll.kernel32.SetConsoleTextAttribute(stdout,0x0080 | 0x0008 |0x0070 | 0x0004)
@@ -8,6 +10,16 @@ class Win7_Colorizer():
     DefaultFg: str = "WHITE"
     DefaultBg: str = "BLACK"
     intensify: bool = False
+    def Print(text : str = None):
+        width = os.get_terminal_size().columns 
+
+        if text != None:
+            text = str(text)
+            lines = text.splitlines()
+            length = [(len(line), line) for line in lines]
+            for line in length:
+                
+                print(line[1] + " " * (width - line[0]))
 
     def __init__(self, string="", FgColor: str = None, BgColor: str = None) -> None:
 
@@ -29,7 +41,24 @@ class Win7_Colorizer():
 
         # self.SetDefaultTheme()
 
-    def coloInitiation(self):
+    def CPrint(self, text : str = None, JustTextBG : bool= False):
+        width = os.get_terminal_size().columns 
+        if text != None:
+            text = str(text)
+
+            lines = text.splitlines()
+            max_len =  max([len(line) for line in lines])
+            length_lines = [(len(line), line) for line in lines]
+            for i, line in enumerate(length_lines):
+                if not JustTextBG:
+                    # print(JustTextBG)
+
+                    print(line[1] + " " * (width - line[0]))
+                else:
+
+                    print(line[1])
+
+    def colorInitiation(self):
         if self.intensify:
             self.colorInitiator(
                 self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
@@ -42,21 +71,25 @@ class Win7_Colorizer():
 
             
 
-    def Colorize(self):
+    def Colorize(self, JustTextBG : bool = False):
         if self.intensify:
             self.colorInitiator(
                 self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
+            
+            onlyText = JustTextBG
+            
+            self.CPrint(self.string, JustTextBG = onlyText)
 
-            print(self.string)
-
-            self.colorInitiator(self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] |
-                                self.COLORS["FOREGROUND"]["INTENSITY"] | self.default_bg | self.default_fg)
+            self.colorInitiator(self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.default_bg | self.default_fg)
 
         else:
             self.colorInitiator(
                 self.stdout, self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
-
-            print(self.string)
+            onlyText = JustTextBG
+            
+            
+            self.CPrint(self.string, JustTextBG = onlyText)
+            # self.CPrint(self.string)
 
             self.colorInitiator(self.stdout, self.default_bg | self.default_fg)
 

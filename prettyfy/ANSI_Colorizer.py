@@ -1,9 +1,24 @@
 from .ColorSet import ColorSet
 
+import os
+
 
 class ANSI_Colorizer:
     DefaultFg : str = "WHITE"
     DefaultBg : str = "BLACK"
+
+    def Print(text = None, sep: str | None = " ", end: str | None = "\n"):
+        width = os.get_terminal_size().columns 
+
+        if text != None:
+            text = str(text)
+            lines = text.splitlines()
+            length = [(len(line), line) for line in lines]
+            for line in length:
+                # print(line[0])
+                # print(line[1] + self.DefaultColorEscape, end="\r")
+                print(line[1] + " " * (width - line[0]), sep = sep, end = end)
+
 
     def __init__(self, string = "", FgColor : str = None, BgColor : str = None) -> None:
 
@@ -24,12 +39,42 @@ class ANSI_Colorizer:
         self.DefaultColorEscape = f"\x1b[{self.default_fg};{self.default_bg}m"
         self.ResetEscape = "\x1b[37;40m"
 
-        
-    def colorInitiation(self):
-        print(self.ColorEscape)
+    def CPrint(self, text: str = None, JustTextBG : bool | None = False):
+        width = os.get_terminal_size().columns 
 
-    def Colorize(self):
-        print(self.ColorEscape + self.string + self.DefaultColorEscape)
+        if text != None:
+            text = str(text)
+
+            lines = text.splitlines()
+            
+            length_lines = [(len(line), line) for line in lines]
+
+            
+            for i, line in enumerate(length_lines):
+                if not JustTextBG:
+                    print(line[1] + " " * (width - line[0]), end="")
+                else:
+                    print(line[1] , end="")
+                    print(self.DefaultColorEscape, end="")
+                    if i == len(length_lines) - 1:
+                        print(" " * (width - line[0]), end= "")
+                        print(self.DefaultColorEscape, end="")
+
+                    else:
+    
+                        print(" " * (width - line[0]))
+                        print(self.ColorEscape, end="")
+
+    def Colorize(self, JustTextBG : bool = False):
+        print(self.ColorEscape, end="")
+
+        text = self.string
+        self.CPrint(text = str(text), JustTextBG = JustTextBG)
+
+        print(self.DefaultColorEscape, end="\n")
+
+    # def Colorize(self):
+    #     print(self.ColorEscape + self.string + self.DefaultColorEscape)
 
     def Reset(self):
         print(self.ResetEscape)

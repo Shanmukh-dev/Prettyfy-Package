@@ -1,60 +1,67 @@
-# import msvcrt
+import prettyfy
+from prettyfy import *
+# from prettyfy.TextColorizer() import Print
 
-# def get_arrow_key():
-#     """
-#     Capture and return arrow key input.
-#     """
-#     while True:
-#         key = msvcrt.getch()
-#         if key == b'\xe0':  # Special keys like arrow keys
-#             key = msvcrt.getch()
-#             if key == b'H':  # Up arrow
-#                 return 'Up'
-#             elif key == b'P':  # Down arrow
-#                 return 'Down'
-#             elif key == b'M':  # Right arrow
-#                 return 'Right'
-#             elif key == b'K':  # Left arrow
-#                 return 'Left'
-#         elif key == b'\x03':  # Ctrl+C (Exit on Ctrl+C)
-#             raise KeyboardInterrupt
 
-# def main():
-#     try:
-#         while True:
-#             key = get_arrow_key()
-#             print(f"Arrow Key Pressed: {key}")
-#     except KeyboardInterrupt:
-#         print("Ctrl+C Pressed (Exiting)")
+# def Option1():
+#     print("This is option 1")
+# def Option2():
+#     print("This is option 2")
+# def Option3():
+#     print("This is option 3")
+# def Option4():
+#     print("This is option 3")
 
-# if __name__ == "__main__":
-#     main()
 
-import sys
+# menuList = ["Option1", "Option2", "Option3", "Option4"]
 
-def get_arrow_key():
-    while True:
-        char = sys.stdin.read(1)
-        if char == '\x1b':  # Check for escape key (often the start of an escape sequence)
-            sequence = sys.stdin.read(2)  # Read the next two characters (e.g., '[A' for Up arrow)
-            if sequence == '[A':
-                return 'Up'
-            elif sequence == '[B':
-                return 'Down'
-            elif sequence == '[C':
-                return 'Right'
-            elif sequence == '[D':
-                return 'Left'
-        elif char == '\x03':  # Ctrl+C (Exit on Ctrl+C)
-            raise KeyboardInterrupt
+# choice = MenuDriver(MenuList=menuList).GetChoice()
 
-def main():
-    try:
-        while True:
-            key = get_arrow_key()
-            print(f"Arrow Key Pressed: {key}")
-    except KeyboardInterrupt:
-        print("Ctrl+C Pressed (Exiting)")
+# exec(f"{choice}()")
 
-if __name__ == "__main__":
-    main()
+
+
+colorize = TextColorizer
+
+Print = colorize.Print
+
+
+colorize.DefaultBg = "CYAN"
+colorize.DefaultFg = "BLACK"
+
+colorize().SetDefaultTheme()
+colorize(FgColor="BLACK", BgColor="CYAN", string="Hope this works...").Colorize()
+
+colorize.intensify = True
+
+# colorize(FgColor="BRIGHT_WHITE", BgColor="BRIGHT_RED", string="This must be bright").Colorize()
+colorize(FgColor="WHITE", BgColor="RED", string="This must be bright").Colorize()
+
+
+colorize.intensify = False
+
+
+colorize(FgColor="WHITE", BgColor="RED", string="This must be normal JustTextBG").Colorize(JustTextBG = True)
+
+
+colorize(FgColor="WHITE", BgColor="RED", string="""This must be normal
+...I think""").Colorize()
+
+Print(text="This is another print")
+
+
+colorize(FgColor="WHITE", BgColor="RED", string="""This must be normal
+...I think JustTextBG""").Colorize(JustTextBG = True)
+
+
+Print(text=45654)
+Print(text="This is another print")
+Print(text="This is another print")
+
+
+input()
+
+
+colorize().Reset()
+
+
