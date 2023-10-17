@@ -16,8 +16,7 @@ class ANSI_Colorizer:
             lines = text.splitlines()
             length = [(len(line), line) for line in lines]
             for line in length:
-                # print(line[0])
-                # print(line[1] + self.DefaultColorEscape, end="\r")
+                
                 print(line[1] + " " * (width - line[0]), sep = sep, end = end)
 
 
@@ -75,8 +74,7 @@ class ANSI_Colorizer:
 
         print(self.DefaultColorEscape, end="\n")
 
-    # def Colorize(self):
-    #     print(self.ColorEscape + self.string + self.DefaultColorEscape)
+    
 
     def Reset(self):
         print(self.ResetEscape)

@@ -1,3 +1,5 @@
+import curses
+
 class ColorSet():
     WIN7_COLOR_SET = {
         "FOREGROUND": {
@@ -66,6 +68,28 @@ class ColorSet():
             "BRIGHT_CYAN": "106",
             "BRIGHT_WHITE": "107",
         }
+
+
+    }
+    MENU_COLOR_SET = {
+        
+        "BLACK": curses.COLOR_BLACK,
+        "RED": curses.COLOR_RED,
+        "GREEN": curses.COLOR_GREEN,
+        "YELLOW": curses.COLOR_YELLOW,
+        "BLUE": curses.COLOR_BLUE,
+        "MAGENTA": curses.COLOR_MAGENTA,
+        "CYAN": curses.COLOR_CYAN,
+        "WHITE": curses.COLOR_WHITE,
+
+        "BRIGHT_BLACK": curses.COLOR_BLACK,
+        "BRIGHT_RED": curses.COLOR_RED,
+        "BRIGHT_GREEN": curses.COLOR_GREEN,
+        "BRIGHT_YELLOW": curses.COLOR_YELLOW,
+        "BRIGHT_BLUE": curses.COLOR_BLUE,
+        "BRIGHT_MAGENTA": curses.COLOR_MAGENTA,
+        "BRIGHT_CYAN": curses.COLOR_CYAN,
+        "BRIGHT_WHITE": curses.COLOR_WHITE,
 
 
     }

@@ -24,12 +24,6 @@ class Decor():
         char = LINE_CHARACTERS[style]
         return char*length
 
-    # def box(style, height, width):
-    #     box_elements = BOX_CHARACTERS[style]
-    #     print(box_elements[0][0] + box_elements[0][1] * (width-2) + box_elements[0][2])
-    #     for i in range(height - 2):
-    #         print(box_elements[2] + ' ' * (width -2) + box_elements[2])
-    #     print(box_elements[1][0] + box_elements[1][1] * (width-2) + box_elements[1][2])
         
     def boxstr(style, string):
         boxed_str = ""

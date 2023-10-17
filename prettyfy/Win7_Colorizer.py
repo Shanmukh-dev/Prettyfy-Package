@@ -40,7 +40,7 @@ class Win7_Colorizer():
         self.FgColor = FgColor
         self.string = string
 
-        # self.SetDefaultTheme()
+        
 
     def CPrint(self, text : str = None, JustTextBG : bool= False):
         width = os.get_terminal_size().columns 
@@ -52,7 +52,7 @@ class Win7_Colorizer():
             length_lines = [(len(line), line) for line in lines]
             for i, line in enumerate(length_lines):
                 if not JustTextBG:
-                    # print(JustTextBG)
+                   
 
                     print(line[1] + " " * (width - line[0]))
                 else:
@@ -90,7 +90,7 @@ class Win7_Colorizer():
             
             
             self.CPrint(self.string, JustTextBG = onlyText)
-            # self.CPrint(self.string)
+            
 
             self.colorInitiator(self.stdout, self.default_bg | self.default_fg)
 
