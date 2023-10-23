@@ -14,3 +14,20 @@ def colorizeText(string = "", FgColor : str = None, BgColor : str = None, JustTe
     only_text = JustTextBG
 
     TextColorizer(string = string, FgColor = FgColor, BgColor = BgColor).Colorize(JustTextBG = only_text)
+
+def Input(prompt = "", FgColor : str = None, BgColor : str = None):
+    value = TextColorizer(FgColor = FgColor, BgColor = BgColor).Input(prompt=prompt)
+    return value
+
+def init_boxStyle(StyleName: str, BoxChars: tuple):
+    if StyleName != None and BoxChars != None:
+        Decor.init_box_style(StyleName, BoxChars)
+    else:
+        pass
+
+
+def init_lineStyle(StyleName: str, LineChar: tuple):
+    if StyleName != None and LineChar != None:
+        Decor.init_line_style(StyleName, LineChar)
+    else:
+        pass    

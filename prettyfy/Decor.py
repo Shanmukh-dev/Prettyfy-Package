@@ -30,12 +30,19 @@ class Decor():
         lines = string.splitlines()
         box_elements = BOX_CHARACTERS[style]
         width = max([len(i) for i in lines])
-        boxed_str += f"{box_elements[0][0] + box_elements[0][1] * (width + 2) + box_elements[0][2]}\n"
+        boxed_str += f"{box_elements[0][0] + box_elements[0][1] * ((width // len(box_elements[0][1])) + 2) + box_elements[0][2]}\n"
         for i, line in enumerate(lines):
             boxed_str += f"{box_elements[2] + ' ' + lines[i] + ' ' + ' '  * (width-len(lines[i])) + box_elements[2]}\n"
 
-        boxed_str += f"{box_elements[1][0] + box_elements[1][1] * (width + 2) + box_elements[1][2]}"
+        boxed_str += f"{box_elements[1][0] + box_elements[1][1] * (width // len(box_elements[1][1]) + 2) + box_elements[1][2]}"
         return boxed_str
+    
+    def init_box_style(StyleName: str, BoxChars: tuple):
+        BOX_CHARACTERS[StyleName] = BoxChars
+
+    def init_line_style(StyleName: str, LineChar: tuple):
+        LINE_CHARACTERS[StyleName] = LineChar
+
 
 
 # -----------------------------------Tests---------------------------------------------------- #

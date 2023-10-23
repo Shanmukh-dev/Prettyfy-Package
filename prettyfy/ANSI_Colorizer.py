@@ -74,7 +74,11 @@ class ANSI_Colorizer:
 
         print(self.DefaultColorEscape, end="\n")
 
-    
+    def Input(self, prompt: str = ""):
+        print(self.ColorEscape, end="")
+        value = input(prompt)
+        print(self.DefaultColorEscape, end="")
+        return value
 
     def Reset(self):
         print(self.ResetEscape)
