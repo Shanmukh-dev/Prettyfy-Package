@@ -97,21 +97,21 @@ class Win7_Colorizer():
 
     def Input(self, prompt: str = ""):
         if self.intensify:
-            self.colorInitiation(
+            self.colorInitiator(
                 self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
             
             value = input(prompt)
 
-            self.colorInitiation(self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.default_bg | self.default_fg)
+            self.colorInitiator(self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.default_bg | self.default_fg)
             return value
 
         else:
-            self.colorInitiation(
+            self.colorInitiator(
                 self.stdout, self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
             
             value = input(prompt)
             
-            self.colorInitiation(self.stdout, self.default_bg | self.default_fg)
+            self.colorInitiator(self.stdout, self.default_bg | self.default_fg)
             return value
 
     def SetDefaultTheme(self):

@@ -15,7 +15,7 @@ def colorizeText(string = "", FgColor : str = None, BgColor : str = None, JustTe
 
     TextColorizer(string = string, FgColor = FgColor, BgColor = BgColor).Colorize(JustTextBG = only_text)
 
-def Input(prompt = "", FgColor : str = None, BgColor : str = None):
+def Input(prompt = "", FgColor : str = None, BgColor: str = None):
     value = TextColorizer(FgColor = FgColor, BgColor = BgColor).Input(prompt=prompt)
     return value
 
