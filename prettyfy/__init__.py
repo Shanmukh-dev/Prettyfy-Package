@@ -19,6 +19,9 @@ def Input(prompt = "", FgColor : str = None, BgColor: str = None):
     value = TextColorizer(FgColor = FgColor, BgColor = BgColor).Input(prompt=prompt)
     return value
 
+def Print(text = None, sep: str = " ", end: str = "\n"):
+    TextColorizer.Print(text = text, sep = sep, end = end)
+
 def init_boxStyle(StyleName: str, BoxChars: tuple):
     if StyleName != None and BoxChars != None:
         Decor.init_box_style(StyleName, BoxChars)
