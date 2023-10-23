@@ -4,6 +4,7 @@ from .Decor import Decor
 import curses
 from curses import wrapper
 import time
+import os
 
 
 class MenuDriver:
@@ -11,6 +12,7 @@ class MenuDriver:
         
         self.MenuList = MenuList
         self.choice = 0
+        self.width = os.get_terminal_size().columns
 
         self.colors = ColorSet.MENU_COLOR_SET#
 
@@ -33,6 +35,11 @@ class MenuDriver:
        
         self.stdscr = stdscr
 
+        def Cprint(string: str = " ", color_pair: int = 1):
+            lines = string.splitlines()
+            for line in lines:
+                self.stdscr.addstr(f"{line}{' ' * (self.width - len(line))}", curses.color_pair(color_pair))
+
         self.maxWidth = max([len(i) for i in self.MenuList])
         curses.init_pair(1, self.FgColor, self.BgColor)
 
@@ -46,25 +53,20 @@ class MenuDriver:
             
             self.stdscr.clear()
 
-            self.stdscr.addstr(f"{Decor.boxstr(style = self.header_border_style, string = self.header)}\n\n", curses.color_pair(1))
+            Cprint(f"{Decor.boxstr(style = self.header_border_style, string = self.header)}\n\n", 1)#
 
-            self.stdscr.addstr("+", curses.color_pair(1))
-            self.stdscr.addstr(Decor.drawLine(style = self.separatorStyle, length = self.maxWidth + 2), curses.color_pair(1))
-            self.stdscr.addstr("+\n", curses.color_pair(1))
+            Cprint(f"+{Decor.drawLine(style = self.separatorStyle, length = self.maxWidth + 2)}+\n", 1)
 
             for i, option in enumerate(self.MenuList):
                 if i == self.choice:
-                    self.stdscr.addstr(f">> {option}\n", curses.color_pair(1) | curses.A_REVERSE| curses.A_BOLD | curses.A_BLINK)
+                    self.stdscr.addstr(f">> {option}\n", curses.color_pair(1) |curses.A_BLINK)
                     self.stdscr.refresh()
                 else:
-                    self.stdscr.addstr(f"{option}\n", curses.color_pair(1))
+                    Cprint(option, 1)
                     self.stdscr.refresh()
 
-            self.stdscr.addstr("+", curses.color_pair(1))
-            self.stdscr.addstr(Decor.drawLine(style = self.separatorStyle, length = self.maxWidth + 2), curses.color_pair(1))
-            self.stdscr.addstr("+\n", curses.color_pair(1))
-            self.stdscr.addstr("\n# Use arrow keys to navigate\n# Press Enter to select\n# Press Esc to cancell\n\n", curses.color_pair(1))#
-
+            Cprint(f"+{Decor.drawLine(style = self.separatorStyle, length = self.maxWidth + 2)}+\n", 1)
+            Cprint(string = "\n# Use arrow keys to navigate\n# Press Enter to select\n# Press Esc to cancell\n\n", color_pair = 1)
             try:
                 self.key = self.stdscr.getkey()
             except:
@@ -82,7 +84,7 @@ class MenuDriver:
                 else:
                     self.choice -= 1
             elif self.key == "\n":
-                self.stdscr.addstr(f"Redirecting to {self.MenuList[self.choice]}", curses.color_pair(1) | curses.A_REVERSE| curses.A_BOLD | curses.A_BLINK)
+                self.stdscr.addstr(f"Redirecting to {self.MenuList[self.choice]}", curses.color_pair(1) |curses.A_BLINK)
                 self.stdscr.refresh()
 
                 time.sleep(1.5)
