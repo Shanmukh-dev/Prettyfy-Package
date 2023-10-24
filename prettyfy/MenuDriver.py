@@ -66,11 +66,12 @@ class MenuDriver:
 
             Cprint(f"+{Decor.drawLine(style = self.separatorStyle, length = self.maxWidth + 2)}+\n", 1)
 
+            style = 0
+            for i in self.SelectionStyle:
+                style = style|self.SELECTION_STYLE[i]
             for i, option in enumerate(self.MenuList):
                 if i == self.choice:
-                    style = 0
-                    for i in self.SelectionStyle:
-                        style = style|self.SELECTION_STYLE[i]
+                    
                     selected_option = f">> {option}"
                     self.stdscr.addstr(f"{selected_option}{' ' * (self.width - len(selected_option))}", curses.color_pair(1) | style)
                     self.stdscr.refresh()
@@ -97,7 +98,7 @@ class MenuDriver:
                 else:
                     self.choice -= 1
             elif self.key == "\n":
-                self.stdscr.addstr(f"Redirecting to {self.MenuList[self.choice]}", curses.color_pair(1) |curses.A_BLINK)
+                self.stdscr.addstr(f"Redirecting to {self.MenuList[self.choice]}", curses.color_pair(1) | style)
                 self.stdscr.refresh()
 
                 time.sleep(1.5)
@@ -107,6 +108,7 @@ class MenuDriver:
                 self.stdscr.refresh()
 
                 self.stdscr.getch()
+                return None
                 break
 
     def GetChoice(self):
