@@ -8,12 +8,21 @@ import os
 
 
 class MenuDriver:
-    def __init__(self, TextColorizer, MenuList, FgColor : str = None, BgColor : str = None, header: str = " ", header_border_style = "simple", separatorStyle = "simple_dash") -> None:
+
+    SELECTION_STYLE = {
+        "INVERT": curses.A_REVERSE,
+        "LIGHT_HIGHLIGHT": curses.A_BLINK,
+        "BOLD" : curses.A_BOLD,
+        "STANDOUT": curses.A_STANDOUT
+    }
+
+
+    def __init__(self, TextColorizer, MenuList, FgColor : str = None, BgColor : str = None, header: str = " ", header_border_style = "simple", separatorStyle = "simple_dash", SelectionStyle = "INVERT") -> None:
         
         self.MenuList = MenuList
         self.choice = 0
         self.width = os.get_terminal_size().columns
-
+        self.SelectionStyle = SelectionStyle.split()
         self.colors = ColorSet.MENU_COLOR_SET#
 
         self.header = "---Menu header here---" if header == " " else header
@@ -59,7 +68,11 @@ class MenuDriver:
 
             for i, option in enumerate(self.MenuList):
                 if i == self.choice:
-                    self.stdscr.addstr(f">> {option}\n", curses.color_pair(1) |curses.A_BLINK)
+                    style = 0
+                    for i in self.SelectionStyle:
+                        style = style|self.SELECTION_STYLE[i]
+                    selected_option = f">> {option}"
+                    self.stdscr.addstr(f"{selected_option}{' ' * (self.width - len(selected_option))}", curses.color_pair(1) | style)
                     self.stdscr.refresh()
                 else:
                     Cprint(option, 1)
