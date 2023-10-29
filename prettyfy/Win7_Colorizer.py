@@ -1,5 +1,6 @@
 import ctypes as ct
 from .ColorSet import ColorSet
+from .Decor import Decor
 
 import os
 
@@ -7,20 +8,29 @@ import os
 class Win7_Colorizer():
     # ct.windll.kernel32.SetConsoleTextAttribute(stdout,0x0080 | 0x0008 |0x0070 | 0x0004)
     # bgIntensity|fgIntensity|BgColor|FgColor
-    DefaultFg: str = "WHITE"
-    DefaultBg: str = "BLACK"
+    DefaultFg: str = "white"
+    DefaultBg: str = "black"
     intensify: bool = False
-    def Print(text : str = None, sep: str = " ", end: str = "\n"):
+    def Print(*text, sep: str = " ", end: str = "\n"):
         width = os.get_terminal_size().columns 
-        text = " " if text == "" else text
-        
-        if text != None:
-            text = str(text)
-            lines = text.splitlines()
-            length = [(len(line), line) for line in lines]
-            for line in length:
-                
-                print(line[1] + " " * (width - line[0]), sep=sep, end=end)
+        text = (" ",) if text == () else text
+        print_contents = " "
+
+        if len(text) == 1:
+            if type(text[0]).__name__ == "list" or type(text[0]).__name__ == "set" or type(text[0]).__name__ == "tuple" or type(text[0]).__name__ == "dict":
+                print_contents = Decor.prettyprint(text[0])
+            else:
+                string_list = map(str, text)
+                print_contents = sep.join(string_list)
+        else:        
+            string_list = map(str, text)
+            print_contents = sep.join(string_list)
+
+        lines = print_contents.splitlines()
+        length = [(len(line), line) for line in lines]
+        for line in length:
+            
+            print(line[1] + " " * (width - line[0]), sep = sep, end = end)
 
     def __init__(self, string="", FgColor: str = None, BgColor: str = None) -> None:
 
@@ -41,89 +51,70 @@ class Win7_Colorizer():
         self.string = string
 
         
+    def eval_(self, exp):
+        try:
+            val = eval(exp)
+            return val
+        except:
+            return str(exp)
 
     def CPrint(self, text : str = None, JustTextBG : bool= False):
         width = os.get_terminal_size().columns 
+        text = self.eval_(text)
+
         if text != None:
-            text = str(text)
+            if type(text).__name__ == "list" or type(text).__name__ == "set" or type(text).__name__ == "tuple" or type(text).__name__ == "dict":
+                text = Decor.prettyprint(text)
+            else:
+                text = str(text)
 
             lines = text.splitlines()
-            max_len =  max([len(line) for line in lines])
+            
             length_lines = [(len(line), line) for line in lines]
             for i, line in enumerate(length_lines):
                 if not JustTextBG:
-                   
-
                     print(line[1] + " " * (width - line[0]))
                 else:
 
-                    print(line[1])
+                    print(line[1], end = "", flush = True)
+                    self.SetDefaultTheme()
+                    print(" " * (width - line[0]))
+                    self.colorInitiation()
 
     def colorInitiation(self):
-        if self.intensify:
-            self.colorInitiator(
-                self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
-
-           
-
-        else:
-            self.colorInitiator(
+        self.colorInitiator(
                 self.stdout, self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
 
             
 
     def Colorize(self, JustTextBG : bool = False):
-        if self.intensify:
-            self.colorInitiator(
-                self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
-            
-            onlyText = JustTextBG
-            
-            self.CPrint(self.string, JustTextBG = onlyText)
-
-            self.colorInitiator(self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.default_bg | self.default_fg)
-
-        else:
-            self.colorInitiator(
-                self.stdout, self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
-            onlyText = JustTextBG
-            
-            
-            self.CPrint(self.string, JustTextBG = onlyText)
-            
-
-            self.colorInitiator(self.stdout, self.default_bg | self.default_fg)
+        
+        self.colorInitiation()
+        onlyText = JustTextBG
+        
+        self.CPrint(self.string, JustTextBG = onlyText)
+        self.SetDefaultTheme()
 
 
     def Input(self, prompt: str = ""):
-        if self.intensify:
-            self.colorInitiator(
-                self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
-            
-            value = input(prompt)
+        self.colorInitiation()
+        prompt = prompt.splitlines()
+        width = os.get_terminal_size().columns 
+        for i, txt in enumerate(prompt):
+            if i != len(prompt) - 1:
+                print(txt, " " * ((width-1) - len(txt)))
+            else:
+                value = input(txt)
+        self.SetDefaultTheme()
+        return value
 
-            self.colorInitiator(self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] | self.COLORS["FOREGROUND"]["INTENSITY"] | self.default_bg | self.default_fg)
-            return value
-
-        else:
-            self.colorInitiator(
-                self.stdout, self.COLORS["BACKGROUND"][self.BgColor] | self.COLORS["FOREGROUND"][self.FgColor])
-            
-            value = input(prompt)
-            
-            self.colorInitiator(self.stdout, self.default_bg | self.default_fg)
-            return value
 
     def SetDefaultTheme(self):
-        if self.intensify:
-            self.colorInitiator(self.stdout, self.COLORS["BACKGROUND"]["INTENSITY"] |
-                                self.COLORS["FOREGROUND"]["INTENSITY"] | self.default_bg | self.default_fg)
-        else:
-            self.colorInitiator(self.stdout, self.default_bg | self.default_fg)
+        self.colorInitiator(self.stdout, self.default_bg | self.default_fg)
 
     def Reset(self):
         self.colorInitiator(
-            self.stdout, self.COLORS["BACKGROUND"]["BLACK"] | self.COLORS["FOREGROUND"]["WHITE"])
+            self.stdout, self.COLORS["BACKGROUND"]["black"] | self.COLORS["FOREGROUND"]["white"])
 
 
 # -----------------------------------Tests---------------------------------------------------- #

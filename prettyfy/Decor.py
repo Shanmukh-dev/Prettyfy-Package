@@ -1,3 +1,5 @@
+import json
+
 LINE_CHARACTERS = {
     "single": "─",
     "double": "═",
@@ -19,6 +21,11 @@ BOX_CHARACTERS = {
 class Decor():
 
     
+    def init_box_style(StyleName: str, BoxChars: tuple):
+        BOX_CHARACTERS[StyleName] = BoxChars
+
+    def init_line_style(StyleName: str, LineChar: tuple):
+        LINE_CHARACTERS[StyleName] = LineChar
 
     def drawLine(style, length):
         char = LINE_CHARACTERS[style]
@@ -37,11 +44,9 @@ class Decor():
         boxed_str += f"{box_elements[1][0] + box_elements[1][1] * (width // len(box_elements[1][1]) + 2) + box_elements[1][2]}"
         return boxed_str
     
-    def init_box_style(StyleName: str, BoxChars: tuple):
-        BOX_CHARACTERS[StyleName] = BoxChars
+    def prettyprint(seq, indent = 2):
+        return json.dumps(seq, indent = indent)
 
-    def init_line_style(StyleName: str, LineChar: tuple):
-        LINE_CHARACTERS[StyleName] = LineChar
 
 
 

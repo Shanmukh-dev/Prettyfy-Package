@@ -16,14 +16,12 @@ class MenuDriver:
         "STANDOUT": curses.A_STANDOUT
     }
 
-
-    def __init__(self, TextColorizer, MenuList, FgColor : str = None, BgColor : str = None, header: str = " ", header_border_style = "simple", separatorStyle = "simple_dash", SelectionStyle = "INVERT") -> None:
+    def __init__(self, TextColorizer, MenuList, FgColor : str = None, BgColor : str = None, header: str = " ", header_border_style = "simple", separatorStyle = "simple_dash", SelectionStyle: str = 0) -> None:
         
         self.MenuList = MenuList
         self.choice = 0
         self.width = os.get_terminal_size().columns
-        self.SelectionStyle = SelectionStyle.split()
-        self.colors = ColorSet.MENU_COLOR_SET#
+        self.SelectionStyle = ["INVERT"] if SelectionStyle == 0 else SelectionStyle.split()
 
         self.header = "---Menu header here---" if header == " " else header
         self.header_border_style = header_border_style
@@ -34,11 +32,13 @@ class MenuDriver:
         self.default_fg = self.colors[TextColorizer.DefaultFg]#
         self.default_bg = self.colors[TextColorizer.DefaultBg]#
 
-        self.FgColor = self.colors[TextColorizer.DefaultFg] if FgColor == None else FgColor#
-        self.BgColor = self.colors[TextColorizer.DefaultBg] if FgColor == None else BgColor#
+        self.FgColor = self.colors[TextColorizer.DefaultFg] if FgColor == None else self.colors[FgColor]#
+        self.BgColor = self.colors[TextColorizer.DefaultBg] if FgColor == None else self.colors[BgColor]#
 
         wrapper(self.Menu)
 
+
+    
 
     def Menu(self, stdscr):
        
@@ -62,7 +62,7 @@ class MenuDriver:
             
             self.stdscr.clear()
 
-            Cprint(f"{Decor.boxstr(style = self.header_border_style, string = self.header)}\n\n", 1)#
+            Cprint(f"{Decor.boxstr(style = self.header_border_style, string = self.header)}\n\n", 1)
 
             Cprint(f"+{Decor.drawLine(style = self.separatorStyle, length = self.maxWidth + 2)}+\n", 1)
 
@@ -104,6 +104,7 @@ class MenuDriver:
                 time.sleep(1.5)
                 break
             elif self.key == "\x1b":
+
                 self.stdscr.addstr("Cancelled. Press any key to continue.")
                 self.stdscr.refresh()
 
