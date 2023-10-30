@@ -9,7 +9,7 @@ def safe_exec():
             with open(filePath) as f:
                 contents = f.read()
                 try:
-                    exec(contents)
+                    exec(contents, globals(), locals())
                 except Exception as e:
                     print(f"Error: {e}")
                     print(f"Error type: {type(e).__name__}")
