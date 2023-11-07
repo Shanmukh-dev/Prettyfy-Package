@@ -12,7 +12,7 @@ class Win7_Colorizer():
     DefaultBg: str = "black"
     intensify: bool = False
     def Print(*text, sep: str = " ", end: str = "\n"):
-        width = os.get_terminal_size().columns 
+        width = os.get_terminal_size().columns - 1
         text = (" ",) if text == () else text
         print_contents = " "
 
@@ -59,7 +59,7 @@ class Win7_Colorizer():
             return str(exp)
 
     def CPrint(self, text : str = None, JustTextBG : bool= False):
-        width = os.get_terminal_size().columns 
+        width = os.get_terminal_size().columns - 1
         text = self.eval_(text)
 
         if text != None:
