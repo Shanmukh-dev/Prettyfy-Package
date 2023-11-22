@@ -1,3 +1,5 @@
+# -------------------------------------Under development-------------------------------------------------
+
 from .Decor import Decor
 from .Win7_Colorizer import Win7_Colorizer
 from .ANSI_Colorizer import ANSI_Colorizer
@@ -28,7 +30,7 @@ def safe_exec():
                     tb = e.__traceback__
                     while tb.tb_next:
                         tb = tb.tb_next
-                        TextColorizer.Print(f"Error raised at module: {tb.tb_frame.f_globals.get('__name__')}")
+                        # TextColorizer.Print(f"Error raised at module: {tb.tb_frame.f_globals.get('__name__')}")
 
                     TextColorizer.Print(f"Error at line(in your file): {tb.tb_lineno}")
     elif ("safe_exec" in args and args[-1] == "--help") or ("safe_exec" in args and args[-1] == "-h"):
