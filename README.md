@@ -2,13 +2,16 @@
  A package of the everyone to beautify their console applicaions and CLI's(Command Line Interfaces).
 
 ## Installation
-```pip install prettyfy```
+```cmd
+pip install prettyfy
+```
 
 ## Usage
-```import prettyfy
+```python
+import prettyfy
 from prettyfy import *
 import os
-# from prettyfy.TextColorizer() import Print
+
 
 colorize = TextColorizer
 colorize.DefaultBg = "bright_cyan"
@@ -42,20 +45,10 @@ exec(f"{choice}()")
 ColorizeText = colorizeText
 
 
-
-
-# colorize.DefaultBg = "bright_cyan"
-# colorize.DefaultFg = "black"
-
 colorizeText(FgColor="black", BgColor="cyan", string="Hope this works...")
 
 
-
-# colorize(FgColor="BRIGHT_WHITE", BgColor="BRIGHT_RED", string="This must be bright").Colorize()
 colorizeText(FgColor="bright_white", BgColor="bright_red", string="This must be bright")
-
-
-
 
 
 colorizeText(FgColor="white", BgColor="red", string="This must be normal JustTextBG", JustTextBG = True)
@@ -112,7 +105,7 @@ colorize().Reset()
 ![text colorization exaple](./images/image2.png)
 
 ## Building CLI
-```
+```python
 from prettyfy.CliUtils import *
 import hashlib
 
