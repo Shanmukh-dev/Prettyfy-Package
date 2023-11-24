@@ -7,6 +7,7 @@ setup(name = "prettyfy",
       long_description_content_type = "text/markdown",
       long_description= open("README.md").read(),
       packages=["prettyfy"],
+      url = "https://github.com/Shanmukh-dev/Prettyfy-Package",
       install_requires = ["windows-curses; sys_platform == 'win32'",],
       entry_points = {
           'console_scripts': [
