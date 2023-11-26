@@ -101,10 +101,10 @@ colorize().Reset()
 
 ## Examples
 ### Menu
-<img src = "./images/image1.png"> ![menu example](images/image1.png)
+![menu example]("images/image1.png")
 
 ### Text colorization
-<img src = "./images/image1.png"> ![text colorization exaple](images/image2.png)
+![text colorization exaple]("images/image2.png")
 
 ## Building CLI
 ```python
