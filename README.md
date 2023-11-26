@@ -5,7 +5,8 @@
 ```cmd
 pip install prettyfy
 ```
-
+## github page:
+[Click here](https://github.com/Shanmukh-dev/Prettyfy-Package)
 ## Usage
 ```python
 import prettyfy
