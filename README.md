@@ -106,6 +106,7 @@ colorize().Reset()
 
 ## Building CLI
 ```python
+# ---------------------------Under development--------------------------------
 from prettyfy.CliUtils import *
 import hashlib
 
